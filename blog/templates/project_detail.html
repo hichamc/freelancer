@@ -1,0 +1,121 @@
+ {% extends "base.html" %}
+ {% load staticfiles %}
+ {% load crispy_forms_tags %}
+
+
+ {% block content %}
+ <style type="text/css">
+ 	
+
+ </style>
+
+ <div class="row shadow-box" style=" ">
+
+ 	<div class="project-detail-container" ng-controller="BidsCtrl" ng-init="currentBid.project_id={{project_instance.id}}">
+
+ 		<div class="row">
+
+			<div class="col-sm-2">
+				<img style="border: 1px solid lightgrey" src="{{project_instance.author.image.url}} ">
+				
+			</div>
+
+			<div class="col-sm-10">
+				<div class="project-header">
+					<span class="title">{{ project_instance.title }} </span>
+					<p><a href="/{{ project_instance.author.username }}"> <strong>{{ project_instance.author.username }}</strong></a>
+					<span style="font-size:90%; color:lightgrey; " > &bull; <i class="fa fa-clock-o" aria-hidden="true"></i> {{ project_instance.created_date }}</span></p>
+				</div>
+			</div>
+
+		</div>
+
+		<div class="descrip-container">
+			<div class="descrip-tile">
+				Description du projet
+			</div>
+
+			<div class="descrip-text">
+				<p>{{ project_instance.descrip }}</p>
+			</div>
+		</div>
+
+	
+		<h4>Offres:</h4>
+
+		<div class="bid-container" ng-repeat="bid in bids">
+			<div class="row">
+
+				<div class="col-sm-1">
+					<img src=" {[{bid.profilepic_url}]} " height="50" width="50"  >
+				</div>
+				
+				<div class="col-sm-9" ng-hide="editPrompt">	
+					<div class="header">
+						<a href="/{[{ bid.bidder }]}"><strong>{[{ bid.bidder }]}</strong></a> &bull;
+						
+						<i class="fa fa-pencil-square-o" aria-hidden="true" ng-click="editPrompt=true"></i> &bull; 
+			        	<i ng-hide="deletePrompt" class="fa fa-trash" aria-hidden="true" ng-click="deletePrompt=true"></i>
+			        	
+			        	<span class="delete-prompt" ng-show="deletePrompt">
+			        		<span>Supprimer?</span>
+				        	<i class="delete-prompt-answer" ng-click="deleteBid(bid)"><strong>Oui</strong></i>&bull;
+				        	<i class="delete-prompt-answer" ng-click="deletePrompt=false"><strong>Non</strong></i>
+			        	</span>
+
+			        	<div class="datetime">
+			        		<i class="fa fa-clock-o" aria-hidden="true"></i>
+			        		{[{ bid.created_date| date : format : timezone }]}
+			        	</div>
+
+					</div>
+
+					<div class="descrip">
+						<p>{[{ bid.descrip }]}</p>
+					</div>
+			
+				</div>
+
+				<div ng-hide="editPrompt" class="col-sm-2 bid-amount-container">
+					<span class="text-right" style="color: grey"><small><strong>Offre</small></strong></span>
+					<p><span style="color: #ed0909; font-weight: bold; font-size:120%">{[{ bid.amount }]}</span>
+					<span style="color: #ed0909; font-size: 50%; font-weight: bold "> DH</span></p>
+				</div>
+
+
+				<div class="col-sm-11" ng-show="editPrompt"> <!--....bid editing form ......-->
+					<input class="form-control" type="number" step="10.00" name="amount" id="amount" ng-model="bid.amount">
+					<textarea class="form-control" id="descrip" name="descrip" ng-model="bid.descrip" rows="4" cols="50" form="review_form"></textarea>
+					<p><button class=" btn btn-primary btn-xs" ng-click="updateBid(bid)">Modifier</button>
+					<button class="btn btn-default btn-xs" ng-click="editPrompt=false">Annuler</button></p>
+				</div>
+
+
+			</div>
+		</div>
+		<hr>
+
+		<label for="amount">Offre (DH):</label>
+		<input class="form-control" type="number" step="10.00" name="amount" id="amount" ng-model="currentBid.amount">
+		<label for="descrip">Description:</label>
+		<textarea class="form-control" id="descrip" name="descrip" ng-model="currentBid.descrip" rows="4" cols="50" form="review_form"></textarea>
+		<br>
+		<p><button class="mybtn" ng-click="saveBid()"><i class="fa fa-paper-plane-o" aria-hidden="true"></i> Envoyer</button></p>
+				
+		<!-- <form class ="form-group" method="POST" action=""> {% csrf_token %}
+			{{ form|crispy }}
+
+			<input class="mybtn" type="submit" value="Post Bid" class="pure-button pure-button-primary"/>
+		</form> -->
+
+	</div>
+
+</div>
+
+<!-- <style type="text/css">
+	.form-control{
+		margin-bottom: 10px;
+	}
+</style> -->
+
+{% endblock %}

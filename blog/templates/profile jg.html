@@ -1,0 +1,65 @@
+ {% extends "base.html" %}
+ {% load staticfiles %}
+
+
+ {% block content %}
+
+ 	<h3>User Profile</h3>
+
+	<ul class="nav nav-tabs" id=tabs>
+		<li id="profileTab" role="presentation" class="active"><a href="#">Profile</a></li>
+		<li id="portfolioTab" role="presentation" class=""><a href="#">Portfolio</a></li>
+		<li id="feedbackTab" role="presentation" class=""><a href="#">Feedback</a></li>
+	</ul>
+
+
+ 	<div class="row" style="border: 1px solid lightgrey; border-radius: 1px; background-color: white;padding: 10px 2px; box-shadow: 1px 2px 4px #888888;">
+ 		<div class="col-lg-3">
+ 			<img class="profilePic" src="{% static '' %}{{ user_instance.profilePic }}">
+ 			Note: {{userRating}}
+ 			{% if request.user == user_instance %}<p>edit profile</p> {% endif %}
+ 		</div>
+
+ 		<div class="col-lg-9">
+
+ 				<div class="tab-content" id="pages">
+ 					<div class="profileTab">
+ 						{% include "profileTab.html" %}
+ 					</div>
+ 					<div class="portfolioTab">
+ 						{% include "portfolioTab.html" %}
+ 					</div>
+ 					<div class="feedbackTab">
+ 						{% include "feedbackTab.html" %}
+ 					</div>
+
+ 				</div>
+
+		</div>
+	</div>
+
+	<script type="text/javascript">
+    
+	  $(document).ready(function(e){
+
+	    $('#pages div:not(:hidden)').hide();
+	    $('.profileTab').show();
+
+	    $('#tabs li').click(function(e){
+
+	    	var page = this.id+'.html';
+	    	console.log(page);
+			$('#tabs li.active').removeClass('active');
+			$(this).addClass('active');
+			
+			$('#pages div:not(:hidden)').hide();
+			$("."+this.id).show();
+			e.preventDefault;
+	    });
+
+	  });
+
+  	</script>
+
+
+{% endblock %}

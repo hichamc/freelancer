@@ -1,0 +1,80 @@
+<h3><strong>PORTFOLIO</strong></h3><hr>
+{% if request.user == user_instance %}
+						<!-- <form id='postPimage' class ="" method="POST" action="/newPimage/" enctype="multipart/form-data">  -->
+						<br>
+
+						<div ng-init="showImageInput=false" class="image-button">
+							<button ng-click="showImageInput=!showImageInput" class="btn btn-default"><i class="fa fa-file-image-o" aria-hidden="true"></i> Ajouter image</button>
+
+
+						</div>
+						<br>
+
+						<div class="image-input" ng-if="showImageInput">
+							<input id="inputImage" type="file" accept="image/*" image="image1" resize-max-height="1000" resize-max-width="1000" resize-quality="0.7" resize-type="image/jpg" />
+
+							<form id="imageform" ng-submit="saveImage(image1)" enctype="multipart/form-data" > {% csrf_token %}
+			        			<!-- <input type="file" name="imagefile"/> -->
+								<input type="submit" value="upload" />
+								<div class="progress">
+								  <div class="progress-bar" role="progressbar" aria-valuenow="{[{barPercent}]}" aria-valuemin="0" aria-valuemax="100" style="width:{[{barPercent}]}%">
+								  </div>
+								</div>
+
+							</form>
+						
+							<hr>
+						</div>
+					{% endif %}
+
+
+
+
+					<!-- The Bootstrap Image Gallery lightbox, should be a child element of the document body -->
+					<div id="blueimp-gallery" class="blueimp-gallery">
+					    <!-- The container for the modal slides -->
+					    <div class="slides"></div>
+					    <!-- Controls for the borderless lightbox -->
+					    <h3 class="title"></h3>
+					    <a class="prev">‹</a>
+					    <a class="next">›</a>
+					    <a class="close">×</a>
+					    <a class="play-pause"></a>
+					    <ol class="indicator"></ol>
+					    <!-- The modal dialog, which will be used to wrap the lightbox content -->
+					    <div class="modal fade">
+					        <div class="modal-dialog">
+					            <div class="modal-content">
+					                <div class="modal-header">
+					                    <button type="button" class="close" aria-hidden="true">&times;</button>
+					                    <h4 class="modal-title"></h4>
+					                </div>
+					                <div class="modal-body next"></div>
+					                <div class="modal-footer">
+					                    <button type="button" class="btn btn-default pull-left prev">
+					                        <i class="glyphicon glyphicon-chevron-left"></i>
+					                        Previous
+					                    </button>
+					                    <button type="button" class="btn btn-primary next">
+					                        Next
+					                        <i class="glyphicon glyphicon-chevron-right"></i>
+					                    </button>
+					                </div>
+					            </div>
+					        </div>
+					    </div>
+					</div>
+
+
+
+					<div id="links">
+						<span ng-repeat="image in images">
+						    <a href="{[{ image.image_url }]}" title="{[{ image.image_url }]}" data-gallery>
+						        <img src="{[{ image.thumbnail_url }]}" alt="Banana">
+						    </a>
+					    </span>
+					    <span ng-hide="images.length" style="color: grey" ><br>this user hasn't posted any images yet</span>
+					   
+					</div>
+
+				

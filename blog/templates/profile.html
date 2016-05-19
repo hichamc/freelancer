@@ -1,0 +1,83 @@
+ {% extends "base.html" %}
+ {% load staticfiles %}
+
+
+ {% block content %}
+ <style>
+    .fa {
+        
+    }
+    ul {
+    	padding: 0px;
+    }
+    ul li {
+        display: inline;
+    }
+    .rating {
+        color: lightgrey;
+    }
+    .rating .filled {
+        color: red;
+    }
+    </style>
+
+ 	<h3>User Profile</h3>
+
+	<ul class="nav nav-tabs">
+
+		<li ng-class="{active: activetab == 'profile'}" role="presentation">
+			<a ng-click=" activetab = 'profile'">profile</a>
+		</li>
+
+		<li ng-class="{active: activetab == 'portfolio'}" role="presentation">
+			<a ng-click=" activetab = 'portfolio'">Portfolio</a>
+		</li>
+		<li ng-class="{active: activetab == 'feedback'}" role="presentation">
+			<a ng-click=" activetab = 'feedback'">Feedback</a>
+		</li>
+
+	</ul>
+
+
+ 	<div class="row" style="border: 1px solid lightgrey; border-radius: 3px; background-color: white;padding: 10px 2px; box-shadow: 2px 2px 2px #e6e6e6;;">
+ 		<div class="col-sm-3">
+ 			<img class="profilePic" src="{{ user_instance.image.url }}">
+ 			Note: {{userRating}}
+ 			{% if request.user == user_instance %}<p>edit profile</p> {% endif %}
+ 		</div>
+
+ 		<div class="col-sm-9">
+			
+			<div ng-switch="activetab" ng-init="activetab='profile'"><!--***** profile tab ****** -->
+			
+				<div ng-switch-when='profile' ><h3>this the profile</h3> 
+
+					{% include "profileTab.html" %}
+
+				</div>     <!-- ************ profile tab end *********** -->
+
+
+				<div ng-switch-when='portfolio' ng-controller="ImagesCtrl"> <!-- ******* portfolio tab ******** -->
+					{% include "portfolioTab.html" %}
+
+           		</div><!-- ******* portfolio tab end ******** -->
+
+
+				<div ng-switch-when='feedback' ng-controller="ReviewsCtrl" ng-init="currentReview.reviewed={{user_instance.id}}"> <!-- ******** feedback tab ****** -->
+					
+					{% include "feedbackTab.html" %}
+
+				</div>        <!-- ******** end of feedback tab ****** -->
+
+			</div>
+
+
+		</div>
+	</div>
+
+
+<script src="//blueimp.github.io/Gallery/js/jquery.blueimp-gallery.min.js"></script>
+<script src="js/bootstrap-image-gallery.min.js"></script>
+
+
+{% endblock %}

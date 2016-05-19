@@ -1,0 +1,81 @@
+ {% extends "base.html" %}
+ {% load staticfiles %}
+
+
+ {% block content %}
+
+        <h3 style="color: #5C5C5C; padding: 10px; border-radius: 2px; background-color:; font-weight: bold;">Liste des appels d'offres</h3> 
+
+        <div class="category-bar text-center">
+            <ul>
+            <li><a href="/">Toutes les gategories</a></li>
+            {% for category in categories %}       
+                <li><a href="/?cat={{category.category_name}}">{{category.category_name}}</a></li>
+            {% endfor %}
+            </ul>
+        </div>
+
+        {% for item in queryset %}
+                    <div class="row">
+                    <!-- <div class="col-lg-2">
+                    
+                    </div> -->
+
+
+                    <div class="col-xs-12">
+                      
+
+                     
+                        <div class="project-container" >
+                            <div class="row">
+                                <div class="col-xs-2" style="margin: 0px">
+                                    <img class="profilePic" src="{{ item.author.image.url }}">
+                                </div>
+
+                                <div class="col-xs-10">
+
+                                    <div class="main-part">
+
+                                      <div class="my-titles"><h4><strong><a href="/{{ item.id }}">{{ item.title }}</a></strong> <span class="category"><strong>{{ item.category }}</strong></span></h4></div>
+                                      <p>{{ item.descrip|truncatechars:70 }}<a href="{{ item.id }}"> (la suite)</a></p>
+
+                                    </div>                
+                    
+                                    <div class="footer-part">
+                                        <small>Posted by: <strong><a href="/{{item.author.username}}">{{ item.author.username }}</a></strong> &bull; <i class="fa fa-clock-o" style="color: grey;" aria-hidden="true"></i> {{ item.created_date|timesince }} ago</small> &bull;
+                                        <a href="/{{ item.id }}/edit/"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a> &bull; 
+                                        <a href="/{{ item.id }}/delete/"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                                    </div>
+
+                                </div>
+                            </div>
+
+
+                        </div>
+                     
+                    </div>
+
+                    <!-- <div class="col-lg-2">
+                      
+                    </div> -->
+
+
+
+          </div>
+        {% endfor %}
+            <div class="pagination">
+                <span class="step-links">
+                {% if queryset.has_previous %}
+                <a href="?page={{ queryset.previous_page_number }}">previous</a>
+                {% endif %}
+
+                <span class="current">
+                Page {{ queryset.number }} of {{ queryset.paginator.num_pages }}.
+                </span>
+
+                {% if queryset.has_next %}
+                <a href="?page={{ queryset.next_page_number }}">next</a>
+                {% endif %}
+                </span>
+            </div>
+{% endblock %}

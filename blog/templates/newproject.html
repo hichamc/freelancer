@@ -1,0 +1,33 @@
+ {% extends "base.html" %}
+ {% load staticfiles %}
+
+
+{% block content %}
+
+<h3 style="padding: 20px; border-radius: 2px; background-color: white;">Nouveau projet</h3> 
+
+<div class="form-group">
+	<form id='new_project_form' class ="form-horizontal" method="POST" action=""> {% csrf_token %}
+
+	<label class="control-label" for="title">Titre:</label>
+	<input class="form-control" type="title" name="title" id="title" placeholder="Project Title" />					
+
+
+	<label class="control-label" for="category">Categorie:</label>
+	<select class="form-control" name="category" id="category">
+	  {% for category in categories %}
+	  	<option value="{{ category.category_name}}">{{ category.category_name }}</option>
+
+	  {% endfor %}
+	</select>
+
+	<p><label class="control-label" for="descrip">Project description:</label>
+	<textarea class="form-control" id="descrip" name="descrip" rows="4" cols="50" form="new_project_form"></textarea></p>
+
+	<input class="form-control" type="submit" value="Poster" class="btn btn-warning"/>
+
+	</form>
+</div>
+
+
+{% endblock %}

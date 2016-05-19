@@ -1,0 +1,190 @@
+{% load staticfiles %}
+
+<!doctype html>
+<html class="no-js" lang="en" dir="ltr" ng-app="projects">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Freelancer.ma</title>
+
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
+
+	    <!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+
+	
+
+
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.js"></script>
+	<!-- <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script> -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.0/jquery.js"></script>
+
+  <!-- <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.1.3/angular-cookies.min.js"></script> -->
+
+  <!-- <script src="{% static 'js/angular.min.1.5.5.js' %}"></script> -->
+  <script src="{% static 'js/serial.js' %}"></script>
+
+
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+		<!-- <link href='https://fonts.googleapis.com/css?family=Arvo:400,700' rel='stylesheet' type='text/css'> -->
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600' rel='stylesheet' type='text/css'>
+  <!-- <link href='https://fonts.googleapis.com/css?family=Istok+Web' rel='stylesheet' type='text/css'> -->
+
+  <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'css/project_detail.css' %}">
+
+  <link rel="stylesheet" href="http://blueimp.github.io/Gallery/css/blueimp-gallery.min.css">
+  <link rel="stylesheet" href="{% static 'css/bootstrap-image-gallery.min.css' %}">
+
+ </head> <!-- ******************** end of head section **************** -->
+
+
+<body>
+
+
+
+<!-- ************************* test nav bar  *********************** -->
+
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header search">
+      <a class="navbar-brand" href="/">Freelancer</a>
+
+    </div>
+
+    
+
+
+      <form class="navbar-form navbar-left" role="search">
+        <div class="form-group">
+          <input type="text" background="" class="form-control login-form-items search" placeholder="Rechercher projet">
+        </div>
+        <button type="submit" class="mybtn"><span class="glyphicon glyphicon-search"></span></button>
+      </form>
+
+      
+
+
+      <ul class="nav navbar-nav navbar-right">  <!-- ********* login form *********** -->
+        <form class ="navbar-form form-inline" method="POST" action="/auth/"> {% csrf_token %}
+            {% if not request.user.is_authenticated %}
+            <input class="form-control login-form-items" type="text" name="email" value="" id="email" placeholder="E-mail">
+            <input class="form-control login-form-items" type="password" name="password" value="" id="password" placeholder="Password">
+            <button type="submit" class="mybtn"><i class="fa fa-sign-in fa" aria-hidden="true"></i></button>
+            {% else %}
+              <div class="user-info-nav">
+                <span class="fa fa-user" aria-hidden="true"></span><strong><a href="/{{request.user.username}}"> {{ request.user.username|title }}</strong></a>,&nbsp; <i class="fa fa-sign-out" aria-hidden="true"></i><a href="/logout">Se deconnecter</a>
+              </div>
+            {% endif %}
+        </form>
+      </ul>
+
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+  
+</nav>
+
+  <div class="banner-fluid" style="overflow: hidden;">
+    <div class="row">
+      <div class="logo col-md-4 col-md-push-2 pull-left">
+        <img src="{% static 'logo.jpg' %}"> 
+      </div>
+
+      <div class="banner-right">
+        <div class="col-md-4 col-md-push-2 ">
+          
+          <i class="fa fa-twitter-square fa-3x pull-right" aria-hidden="true" style="color: #4099FF"></i>
+          <i class="fa fa-facebook-square fa-3x pull-right" aria-hidden="true" style="color: #3b5998"></i>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+
+
+
+
+	
+
+<!-- 8888888888888888888888888 test nav bar end  7888888888888888888888888888 -->
+
+
+
+<div class="container">
+	<div class="rowww">
+
+  
+
+    <div class="row"> 
+      <div class="col-md-10 col-md-push-1">
+       
+            
+            <!-- <span class="glyphicon glyphicon-user" aria-hidden="true"></span> -->
+              <div class="logged-container">
+                {% if request.user.is_authenticated %}
+                
+                  Logged in as: <span class="fa fa-user" aria-hidden="true"></span> <strong><a href="/{{request.user.username}}"> {{ request.user.username }}</a> ({{request.user.last_name}})</strong> | <a href="/newproject">New Project</a> | <a href="/login">Change user</a> | <a href="/logout" data-confirm="true">Logout</a>
+                {% else %}
+                  Vous n'etes pas identifié. <a href="/login">Identifiez-vous</a> | <a href="/register">Creer un compte</a>
+
+                {% endif %}
+
+
+              </div>
+            
+            
+
+       </div>
+    </div>
+		
+    
+    <div class="row"> 
+      <div class="col-md-7 col-md-push-1">
+      {% block content %}<!--  ***************** main body content left ****************** -->
+       
+        
+      {% endblock %}  <!--  ***************** main body content left ****************** -->
+      </div>             
+
+    		
+        <div class="col-md-3 col-md-push-1 ">
+          <div class="right-bar">
+           <div class="right-bar-header">
+            <h4><strong>This is the left bar</strong></h4>
+           </div>
+
+           <div class="right-bar-content">
+           
+      			Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32.
+            </div>
+      		</div>
+        </div>
+		</div>
+	</div>
+	
+	
+</div>
+
+
+<script type="text/javascript">
+
+  $('*[data-confirm="true"]').on('click', function() {
+    return confirm("Vous etes sur le point de vous deconnecter. Continuer?");
+  });
+
+</script>
+
+
+
+</body>

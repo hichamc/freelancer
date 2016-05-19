@@ -1,0 +1,100 @@
+.shadow-box {
+ 		margin-top: 40px ;
+ 		border: 1px solid lightgrey; 
+ 		border-radius: 3px; 
+ 		background-color: white;padding: 0px 2px; 
+ 		box-shadow: 2px 3px 2px #e6e6e6;
+ 	}
+ 	.project-detail-container {
+ 		padding: 15px
+ 	}
+
+ 	.project-header .title {
+ 		font-size: 150%;
+ 		font-weight: bold;
+ 		/*color: #337AB7;*/
+ 		color: #424242;
+ 	}
+ 	
+
+ 	.descrip-container{
+ 		margin-top: 30px;
+ 		margin-bottom: 50px;
+ 	}
+
+ 	.descrip-container .descrip-tile {
+ 		background-color: lightgrey; 
+ 		color:white; 
+ 		border-top-right-radius: 5px;
+ 		border-top-left-radius: 5px;
+ 		font-size: 80%;
+ 		font-weight: bold;
+ 		padding: 2px;
+ 		text-align: center;
+ 		margin-bottom: 0px;
+ 		width: 140px;
+ 	}
+
+ 	.descrip-container .descrip-text {
+ 		border: 1px solid lightgrey;
+ 		padding: 10px;
+ 		margin-top: 0px;
+ 		background-color: #F7F7F7;
+ 		
+ 		min-height: 200px;
+ 	}
+
+ 	.bid-container {
+ 		border:1px solid lightgrey;
+ 		padding: 10px 10px 0px 10px;
+ 		border-radius: 4px;
+ 		margin-bottom: 10px;
+ 		/*box-shadow: 1px 1px 1px #888888;*/
+ 		box-shadow: 1px 1px 2px #e6e6e6;
+ 		background-color: white;
+ 	}
+
+ 	.bid-container img {
+ 		border: 1px solid lightgrey;
+ 	}
+
+ 	.bid-container p {
+ 	}
+
+ 	.bid-container .header {
+ 		/*border-bottom: 1px solid lightgrey;*/
+ 		/*margin-bottom: 5px;*/
+ 		padding-left: 5px;
+ 	}
+
+ 	.bid-container .header .datetime {
+ 		font-size: 82%;
+ 		font-weight: bold;
+ 		color: #B8B8B8;
+ 	}
+
+ 	.bid-container .descrip {
+
+ 		padding-left: 5px;
+ 		color: #636363;
+ 		font-size: 92%;
+ 		/*font-weight: bold;*/
+ 	}
+
+ 	.bid-amount-container {
+ 		border-left:1px solid lightgrey;
+ 	}
+
+ 	.delete-prompt {
+ 		font-size: 75%;
+ 	}
+ 	.delete-prompt-answer {
+ 		
+ 		padding:1px 5px 1px 3px;
+ 	}
+
+ 	.delete-prompt-answer:hover {
+ 		background-color: grey;
+ 		color: white;
+ 		border-radius: 2px;
+ 	}

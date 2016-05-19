@@ -1,0 +1,179 @@
+ {% extends "base.html" %}
+ {% load staticfiles %}
+
+
+ {% block content %}
+
+ 	<h3>User Profile</h3>
+
+	<ul class="nav nav-tabs">
+
+		<li ng-class="{active: activetab == 'profile'}" role="presentation">
+			<a ng-click=" activetab = 'profile'">profile</a>
+		</li>
+
+		<li ng-class="{active: activetab == 'portfolio'}" role="presentation">
+			<a ng-click=" activetab = 'portfolio'">Portfolio</a>
+		</li>
+		<li ng-class="{active: activetab == 'feedback'}" role="presentation">
+			<a ng-click=" activetab = 'feedback'">Feedback</a>
+		</li>
+
+	</ul>
+
+
+ 	<div class="row" style="border: 1px solid lightgrey; border-radius: 1px; background-color: white;padding: 10px 2px; box-shadow: 1px 2px 4px #888888;">
+ 		<div class="col-lg-3">
+ 			<img class="profilePic" src="{% static '' %}{{ user_instance.profilePic }}">
+ 			Note: {{userRating}}
+ 			{% if request.user == user_instance %}<p>edit profile</p> {% endif %}
+ 		</div>
+
+ 		<div class="col-lg-9">
+			
+			<div ng-switch="activetab" ng-init="activetab='profile'">
+			
+				<div ng-switch-when='profile'><h3>this the profile</h3> <!-- ************ profile tab *********** -->
+
+					<br>
+					<p> <strong>First name:</strong> {{ user_instance.first_name }}	</p>
+					<p> <strong>Last name:</strong> {{ user_instance.last_name }}	</p>
+					<p><strong>Email:</strong> {{ user_instance.email }}</p>
+					<br>
+
+
+				</div>     <!-- ************ profile tab end *********** -->
+
+
+				<div ng-switch-when='portfolio'><h3> this is the mfing portfolio</h3> <!-- ******* portfolio tab ******** -->
+
+					{% if request.user == user_instance %}
+						<!-- <form id='postPimage' class ="" method="POST" action="/newPimage/" enctype="multipart/form-data">  -->
+						<br>
+						<form class ="imageForm" action="#" enctype="multipart/form-data">{% csrf_token %}
+							<input type="file" name="imagefile" style="margin: 10px;">
+							<button class="btn btn-sm btn-info upload" type="submit">Upload</button>
+							<button type="button" class="btn btn-sm btn-danger cancel">Cancel</button>
+
+							<div id="pBar" class="progress progress-striped active">
+								<div class="progress-bar" style="width:0%"></div>
+							</div>
+						</form>
+						<hr>
+					{% endif %}
+
+
+					<div ng-controller="ImagesCtrl"> 
+						<br>
+			        	
+			        	<span class="image" ng-repeat="image in images"><img src="{[{ image.imagefile }]}"></span>
+						<span ng-hide="images.length" style="color: grey" >this user hasn't posted any images yet</span>
+
+			        </div>
+
+				</div>                       <!-- ******* portfolio tab end ******** -->
+
+
+				<div ng-switch-when='feedback'><h1>Reviews ({{ number_reviews }})</h1> <!-- ******** feedback tab ****** -->
+				<hr>
+					
+					{% for review in reviews %}
+						<div>
+							
+							<p><a href="/{{ review.reviewer.username }}"/><strong>{{ review.reviewer.username }}</strong></a> ({{ review.reviewer.last_name}}) Note: <strong>{{ review.rating }}</strong></p>
+							<p>{{ review.review_text }}</p>
+							<hr>
+						</div>
+
+					{% empty %}
+
+						<br/>
+						<h5>This user doesn't have any reviews yet</h5>
+						<br/>
+						<hr>
+					
+					{% endfor %}
+
+
+
+					{% if request.user.is_authenticated and request.user != user_instance %} 
+					<form id='review_form' class ="pure-form pure-form-stacked" method="POST" action=""> {% csrf_token %}
+
+					<label for="note">Note:</label>
+					<input type="number" step="0.01" name="note" value="" id="note" placeholder="Note" />					
+					
+					<input type="submit" value="Poster" class="pure-button pure-button-primary"/>
+
+					</form>
+
+					<label for="review_form">Review:</label>
+					<textarea id="review_text" name="review_text" rows="4" cols="50" form="review_form"></textarea>
+
+
+					{% endif %} 
+
+				</div>        <!-- ******** end of feedback tab ****** -->
+
+			</div>
+
+
+		</div>
+	</div>
+
+	<script type="text/javascript">
+		
+		$('.upload-all').click(function(){
+			//submit all form
+			$('form .imageForm').submit();
+		});
+
+		$('.cancel-all').click(function(){
+			//submit all form
+			$('form .cancel').click();
+		});
+
+		$(document).on('submit','form',function(e){
+			e.preventDefault();
+
+			$form = $(this);
+
+			uploadImage($form);
+
+		});
+
+		function uploadImage($form){
+			$form.find('.progress-bar').removeClass('progress-bar-success')
+										.removeClass('progress-bar-danger');
+
+			var formdata = new FormData($form[0]); //formelement
+			var request = new XMLHttpRequest();
+
+			//progress event...
+			request.upload.addEventListener('progress',function(e){
+				var percent = Math.round(e.loaded/e.total * 100);
+				$form.find('.progress-bar').width(percent+'%').html(percent+'%');
+			});
+
+			//progress completed load event
+			request.addEventListener('load',function(e){
+				$form.find('.progress-bar').addClass('progress-bar-success').html('Image uploaded!');
+			});
+
+			request.open('post', '/imagelist/');
+			request.send(formdata);
+
+			$form.on('click','.cancel',function(){
+				request.abort();
+
+				$form.find('.progress-bar')
+					.addClass('progress-bar-danger')
+					.removeClass('progress-bar-success')
+					.html('upload aborted...');
+			});
+
+		}
+
+	</script>
+
+
+{% endblock %}

@@ -1,0 +1,50 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+<head>
+	<title>projects serialized</title>
+	<!-- <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.1.3/angular.min.js"></script> -->
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.1.3/angular-cookies.min.js"></script>
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/angularjs/X.Y.Z/angular-cookies.js"></script> -->
+
+    <script src="{% static "serial.js" %}"></script>
+</head>
+<body ng-app="projects" ng-init="currentUser = '{{request.user.username}}'">
+
+	<div ng-controller="ListCtrl" >
+
+		<p>title: <input type="text" name="title" ng-model="currentItem.title"/></p>
+		<p>category: <input type="text" name="category" ng-model="currentItem.category"/></p>
+		<p>descrption: <input type="text" name="descrip" ng-model="currentItem.descrip"/></p>
+		
+		<button ng-click="saveItem()">Save</button>
+		<hr/>
+
+        <!-- <pre>currentItem:{[{ currentItem | json }]}</pre> -->
+
+
+        <h1>Project List</h1>
+        <ul class="plain-list">
+            <li  ng-repeat="item in items" >
+	            <span ng-init="toggleEdit[$index]=false" ng-hide="toggleEdit[$index]"><span ng-click="editItem($index)">{[{ $index }]}:<strong>{[{ item.title }]}</strong> - {[{ item.category }]}</span>
+	            <button ng-click="delItem(item)">Del</button></span>
+	            <span ng-hide="!toggleEdit[$index]"><input type="text" name="title" ng-model="item.title"><input type="text" name="category" ng-model="item.category"><button ng-click="updateItem(item)">Update</button></span></span>
+            </li>
+        </ul>
+
+        <div ng-controller="ImagesCtrl">
+	        <input type="file" name="imagefile" ng-model="imagefile" onchange="angular.element(this).scope().file_changed(this)" type="file" accept="image/*" enctype="multipart/form-data">
+
+			<button ng-click="saveImage()">Upload</button>
+
+        	<span class="image" ng-repeat="image in images">
+        	
+        		<img src="{[{ image.imagefile }]}">
+
+        	</span>
+        </div>
+</body>
+</html>
+

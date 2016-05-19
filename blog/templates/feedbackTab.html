@@ -1,0 +1,54 @@
+<h3><strong>REVIEWS &bull;</strong> {{ number_reviews }}</h3>
+					<hr>
+
+					<div class="review" ng-repeat="review in reviews">
+			        	
+						<span ng-init="toggleEdit=false" ng-hide="toggleEdit">
+						
+							<img src=" {[{ review.profilepic_url }]} " height="30" width="30" style="border-radius: 50%;" >
+				        	<strong><a href="/{[{ review.reviewer }]}">{[{ review.reviewer }]}</a></strong>
+
+				        	<span style="color:grey;"> &bull; <span style="	font-size: 12px" >{[{ review.created_date | date : format : timezone }]}</span> &bull;
+				        	<i class="fa fa-pencil-square-o" aria-hidden="true" ng-click="toggleEdit=true"></i> &bull; 
+				        	<i ng-hide="deletePrompt" class="fa fa-trash" aria-hidden="true" ng-click="deletePrompt=true"></i>
+				        	</span>
+
+				        	<span class="delete-prompt" ng-show="deletePrompt">
+				        		<span>Supprimer?</span>
+					        	<i class="delete-prompt-answer" ng-click="deleteReview(review)"><strong>Oui</strong></i>&bull;
+					        	<i class="delete-prompt-answer" ng-click="deletePrompt=false"><strong>Non</strong></i>
+			        		</span>
+
+				        	<div class="star-rating" clickable="false" star-rating rating-value="review.rating" data-max="5" ></div>
+				        	{[{ review.review_text }]}
+			        	</span>
+
+			        	<span ng-show="toggleEdit">
+			        		<div class="star-rating" clickable="true" star-rating rating-value="review.rating" data-max="5" on-rating-selected="updateFunction(rating, review)"></div>
+			        		<p><label for="update_review_text">Review:</label></p>
+							<textarea class="form-control" id="update_review_text" name="update_review_text" ng-model="review.review_text" rows="4" cols="50" form="review_form"></textarea>
+							<input type="hidden" name="rating" ng-model="review.rating"/></p>
+							<p><button class=" btn btn-primary btn-xs" ng-click="updateReview(review)">Save</button>
+							<button class="btn btn-default btn-xs" ng-click="toggleEdit=false">cancel</button></p>
+
+
+			        	</span>
+			        	<hr>
+			        </div>
+
+
+
+					{% if request.user.is_authenticated and request.user != user_instance %} 
+					
+					<span><strong>Note:</strong></span>
+					<div ng-init="rating = star.rating + 1"></div>
+
+					<div class="star-rating" clickable="true" star-rating rating-value="-1" data-max="5" on-rating-selected="rateFunction(rating)"></div>
+					<input type="hidden" name="rating" ng-model="currentReviews.rating"/></p>				
+
+					<p><label for="review_text">Review:</label></p>
+					<textarea class="form-control" id="review_text" name="review_text" ng-model="currentReview.review_text" rows="4" cols="50" form="review_form"></textarea>
+					<p><button style="margin-top:5px" class="btn btn-xs btn-primary" ng-click="saveReview()"><i class="fa fa-paper-plane-o" aria-hidden="true"></i> Envoyer</button></p>
+
+
+					{% endif %} 

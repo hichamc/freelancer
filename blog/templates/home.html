@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+	<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Foundation for Sites</title>
+	 <!-- Compressed CSS -->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/foundation/6.2.0/foundation.min.css">
+
+	<!-- Compressed JavaScript -->
+	<script src="https://cdn.jsdelivr.net/foundation/6.2.0/foundation.min.js"></script>
+
+	<link href='https://fonts.googleapis.com/css?family=Arvo:400,700' rel='stylesheet' type='text/css'>
+	<style type="text/css"> body { font-family: 'Arvo', serif;} </style>
+
+  </head>
+</head>
+<body>
+
+<div class="row">
+	<div class=" columns large-12">
+		<div class="top-bar">
+		  <div class="top-bar-left">
+		  <h2>Freelancer.ma</h2>
+		    <div class="panel callout radius" >
+				<p>Logged in as <a href="/{{request.user}}"> {{ request.user }}</a> | <a href="/newproject">New Project</a> | <a href="/login">Change user</a></p>
+			</div>
+
+		  </div>
+		  <div class="top-bar-right">
+		    <ul class="menu">
+		    	<form class ="" method="POST" action="/auth/"> {% csrf_token %}
+				<li><input type="text" name="username" value="" id="username" placeholder="Username"></li>
+				<li><input type="password" name="password" value="" id="password" placeholder="Password"></li>
+				<li><input type="submit" value="Sign In" class="button"></li>
+				</form>
+		    </ul>
+		  </div>
+		</div>
+	</div>
+</div>
+
+
+
+<div class="row">
+	<div class=" columns medium-12">
+	<h3>Project List</h3>		
+
+	{% for item in queryset %}
+		<div class "hix" style="border-bottom: lightgrey solid 1px; " >
+			<h4><a href="/{{ item.id }}">{{ item.title }}</a></h4>
+			{{ item.descrip }}
+			<p>Posted by: {{ item.author }}</p>
+		</div>
+	{% endfor %}
+	</div>
+
+</div>
+
+</body>
+</html>

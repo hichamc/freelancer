@@ -1,0 +1,104 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+<head>
+	<title>projects serialized</title>
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.0/jquery.js"></script>
+
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.js"></script>
+
+    <script src="{% static 'serial.js' %}"></script>
+
+    <style type="text/css">
+		/* The starting CSS styles for the enter animation */
+		.item.ng-enter {
+		  transition:0.5s linear all;
+		  opacity:0;
+		}
+
+		/* The finishing CSS styles for the enter animation */
+		.item.ng-enter.ng-enter-active {
+		  opacity:1;
+		}
+    </style>
+</head>
+
+<body ng-app="projects" ng-init="currentUser = '{{request.user.username}}'">
+
+	<div ng-controller="ListCtrl" >
+
+		<p>title: <input type="text" name="title" ng-model="currentItem.title"/></p>
+		<p>category: <input type="text" name="category" ng-model="currentItem.category"/></p>
+		<p>descrption: <input type="text" name="descrip" ng-model="currentItem.descrip"/></p>
+		
+		<button ng-click="saveItem()">Save</button>
+		<hr/>
+
+        <!-- <pre>currentItem:{[{ currentItem | json }]}</pre> -->
+
+
+        <h1>Project List</h1>
+        <ul class="list">
+            <li  ng-repeat="item in items" >
+            
+		            <span ng-init="toggleEdit[$index]=false" ng-hide="toggleEdit[$index]"><span ng-click="editItem($index)">{[{ $index }]}:<strong>{[{ item.title }]}</strong> - {[{ item.category }]}</span>
+		            <button ng-click="delItem(item)">Del</button></span>
+		            <span ng-hide="!toggleEdit[$index]"><input type="text" name="title" ng-model="item.title"><input type="text" name="category" ng-model="item.category"><button ng-click="updateItem(item)">Update</button></span></span>
+            </li>
+        </ul>
+
+        <div ng-controller="ImagesCtrl">
+	        
+        	<form id="imageform" ng-submit="saveImage()" enctype="multipart/form-data" > {% csrf_token %}
+	        	<!-- <input type="file" name="imagefile" ng-model="imagefile" onchange="angular.element(this).scope().file_changed(this)" type="file" accept="image/*" enctype="multipart/form-data"> -->
+		        <input type="file" name="imagefile"/>
+
+				<!-- <button ng-click="saveImage()">Upload</button> -->
+				<input type="submit" value="upload" />
+
+				<!-- <div id="pBar" class="progress progress-striped active">
+					<div class="progress-bar" aria-valuenow="{[{barPercent}]}" style="width:{[{barPercent}]}%"></div> 
+				</div> -->
+
+				<div class="progress">
+				  <div class="progress-bar" role="progressbar"
+				  aria-valuenow="{[{barPercent}]}" aria-valuemin="0" aria-valuemax="100" style="width:{[{barPercent}]}%">
+				  </div>
+				</div>
+
+			</form>
+
+
+        	<span class="image" ng-repeat="image in images">
+        	
+        		<img src="{[{ image.imagefile }]}">
+
+        	</span>
+        </div>
+        <br/>
+
+        <div ng-controller="ReviewsCtrl">
+
+	        <div class="review" ng-repeat="review in reviews">
+	        	<p><strong><a href="/{[{ review.reviewer }]}">{[{ review.reviewer }]}</a></strong></p>
+	        	{[{ review.review_text }]}
+	        	<hr>
+	        </div>
+
+        </div>
+
+</body>
+</html>
+

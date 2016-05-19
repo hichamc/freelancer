@@ -1,0 +1,203 @@
+body { 
+              /*font-family: 'Arvo', serif;*/
+              font-family: 'Open Sans', sans-serif;
+              background-color: #F2F2F2;
+              /*font-family: 'Istok Web', sans-serif;*/
+            }
+
+            h3 a {
+              text-decoration: none;
+              color: #ed0909;      
+          }
+
+          .category {
+            color:white;
+            font-size: 55%;
+            background-color: grey;
+            text-transform: uppercase;
+            border-radius: 4px;
+            padding: 1px 4px;
+          }
+
+        .container-fluid {
+             background-color: #lightgrey;
+             margin-bottom: solid 3px #BFBFBF;
+        /*border-top: solid 10px #E30707;*/
+   
+        }
+
+
+        .my-titles {
+          text-decoration: none;
+          color: red;
+
+        }
+
+        .login-form-items {
+          border: 2px solid #BFBFBF;
+          /*border: 2px solid #D40000; CFCFCF #336699*/
+          border-radius: 3px;
+          width:200px;
+        }
+
+        .search {
+          background: url("{{STATIC_URL}}loupe.png")
+          background-image: url("{{STATIC_URL}}loupe.png");
+        }
+
+        .mybtn {
+  background: #ed0909;
+  background-image: -webkit-linear-gradient(top, #ed0909, #ed0909);
+  background-image: -moz-linear-gradient(top, #ed0909, #ed0909);
+  background-image: -ms-linear-gradient(top, #ed0909, #ed0909);
+  background-image: -o-linear-gradient(top, #ed0909, #ed0909);
+  background-image: linear-gradient(to bottom, #ed0909, #ed0909);
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 3px;
+  font-family: Arial;
+  color: #ffffff;
+  font-size: 14px;
+  padding: 6px 10px;
+  text-decoration: none;
+  border: 0px;
+}
+
+.mybtn:hover {
+  background: #ff4040;
+  background-image: -webkit-linear-gradient(top, #ff4040, #ff5454);
+  background-image: -moz-linear-gradient(top, #ff4040, #ff5454);
+  background-image: -ms-linear-gradient(top, #ff4040, #ff5454);
+  background-image: -o-linear-gradient(top, #ff4040, #ff5454);
+  background-image: linear-gradient(to bottom, #ff4040, #ff5454);
+  text-decoration: none;
+}
+            
+.project-container {
+  margin: 5px 0px;
+  background-color: white;
+  border-radius: 0px;
+  /*font-weight: bold;*/
+  font-size: ;
+
+  border: solid 1px lightgrey;
+  border-bottom: solid 2px lightgrey;
+
+  /*padding: 0px 15px 5px 15px;*/
+}
+
+.profilePic {
+  border-radius: 2%; border:1px solid lightgrey; margin: 8px 0px 6px 10px; height: 90%; width: 90%
+}
+.right-bar {
+  margin: 70px 0px 0px 0px;
+  background-color: white;
+  border-radius: 2px;
+
+  border: solid 1px lightgrey;
+  border-bottom: solid 3px lightgrey;
+  padding: 5px 15px;
+
+  /*text-align: justify;
+    text-justify: inter-word;*/
+
+}
+
+.right-bar-header {
+  font-weight: bold;
+
+  color:#5c5c5c;
+  text-align: center;
+  margin: 5px 0px;
+  /*background-color: #ed0909;*/
+  border-radius: 3px;
+
+  padding: 0px 5px;
+
+}
+
+.right-bar-content {
+  font-size: 90%;
+}
+
+.user-info-nav {
+  padding-top: 6px; 
+  padding-right: 25px; 
+  color: grey;
+  }
+
+
+.main-part {
+
+  padding: 0px 10px 5px 10px;
+
+}
+.footer-part {
+   /*background-color: #EBEBEB;*/
+   background-color: #F7F7F7;
+   margin: 0px
+   width:auto;
+   padding-left: 10px;
+  }
+
+  .footer-part strong{ /*user name in the bottpn of the project container*/
+   color: #0D75BF;
+   font-size: 110%;
+  }
+  .navbar {
+    margin-bottom: 0;
+  }
+  .banner-fluid {
+    background-color: white;
+    margin:0px;
+   /* height: auto;
+    width: 100%;*/
+  }
+  .logo {
+    margin-top: 5px;
+
+  }
+  .banner-right {
+    margin-top: 5px;
+
+  }
+  .container-fluid {
+    background-color: lightgrey;
+    background-color: #E3E3E3;
+             margin-bottom: solid 3px #BFBFBF;
+
+  }
+
+  .logged-container {
+    /*background-color: white;
+    border-radius-bottom: 5px;*/
+    padding: 10px 5px;
+    border-bottom: solid 1px lightgrey;
+    font-size: 85%;
+  }
+
+.category-bar {
+  border-radius: 2px; background-color: ;
+  padding: 0px;
+}
+
+.category-bar li {
+  font-weight: bold;
+  display: inline;
+  font-size: 80%;
+  background-color: white;
+  text-transform: uppercase;
+  border-radius: 4px;
+  padding: 1px 4px;
+  background-color: grey;
+  
+}
+
+.category-bar li a{
+  text-decoration: none;
+  
+  color: white;
+}
+.category-bar li:hover {
+  background-color: #B3B3B3;
+}
