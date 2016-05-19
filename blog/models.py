@@ -28,8 +28,6 @@ class AccountManager(BaseUserManager):
 		account = self.create_user(email, password, **kwargs)
 
 		account.is_admin = True
-		account.is_staff = True
-		account.is_superuser = True
 		account.save()
 
 		return account
@@ -46,8 +44,7 @@ class Account(AbstractBaseUser):
 
 	is_active = models.BooleanField(default=True)
 	is_admin = models.BooleanField(default=False)
-	is_staff = models.BooleanField(default=False)
-	is_superuser = models.BooleanField(default=False)
+	
 
 	created_at = models.DateTimeField(auto_now_add=True)
 	updated_at = models.DateTimeField(auto_now=True)
